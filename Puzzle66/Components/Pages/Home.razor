@@ -1,0 +1,29 @@
+﻿@page "/"
+@inject IConfiguration Configuration
+
+<PageTitle>Home</PageTitle>
+
+<h1>Hello, world!</h1>
+
+Welcome to your new app.
+
+<p>
+    Your favorite color is @FavoriteColor and your favorite number is @FavoriteNumber.
+</p>
+
+<p>
+    This app gets configuration from Azure Key Vault. It should be working in Visual Studio, but it's not.
+</p>
+
+@code {
+
+    string FavoriteColor { get; set; } = string.Empty;
+    int FavoriteNumber { get; set; }
+
+    protected override void OnInitialized()
+    {
+        var section = Configuration.GetSection("MyPersonalSettings");
+        FavoriteColor = section["FavoriteColor"];
+        FavoriteNumber = int.Parse(section["FavoriteNumber"]);
+    }
+}
